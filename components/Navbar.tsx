@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
-import Navitems from './ui/Navitems'
+import Navitems from './Navitems'
 
 function Navbar() {
   return (
