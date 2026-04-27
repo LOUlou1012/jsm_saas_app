@@ -106,7 +106,7 @@ const CompanionComponent = ({ companionId, subject, topic, name, userName, userI
                 <div className='companion-avatar' style={{background:getSubjectColor(subject)}}>
                     <div className={
                         cn(
-                                'absolute transition-opacity duration-1000', callStatus === CallStatus.FINISHED || callStatus === CallStatus.INACTIVE ? 'opacity-1001' : 'opacity-0', callStatus === CallStatus.CONNECTING && 'opacity-100 animate-pulse'
+                                'absolute transition-opacity duration-1000', callStatus === CallStatus.FINISHED || callStatus === CallStatus.INACTIVE ? 'opacity-100' : 'opacity-0', callStatus === CallStatus.CONNECTING && 'opacity-100 animate-pulse'
                             )
                     }>
                         <Image src={`/icons/${subject}.svg`} alt={subject} width={150} height={150} className="max-sm:w-fit" />
@@ -131,7 +131,7 @@ const CompanionComponent = ({ companionId, subject, topic, name, userName, userI
                             {userName}
                     </p>
                 </div>
-                <button className="btn-mic" onClick={toggleMicrophone}>
+                <button className="btn-mic" onClick={toggleMicrophone} disabled={callStatus !== CallStatus.ACTIVE}>
                     <Image src={isMuted ? '/icons/mic-off.svg' : '/icons/mic-on.svg'} alt="mic" width={36} height={36} />
                     <p className="max-sm:hidden">
                         {isMuted ? 'Turn on microphone' : 'Turn off microphone'}
