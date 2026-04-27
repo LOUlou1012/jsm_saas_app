@@ -25,6 +25,8 @@ import {
 } from "@/components/ui/select"
 import { subjects } from "@/constants"
 import {Textarea} from "@/components/ui/textarea";
+import { createCompanion } from "@/lib/actions/companion.actions"
+import { redirect } from "next/navigation"
 
 
 
@@ -52,8 +54,14 @@ const CompanionForm = () =>{
         },
     })
 
-    const onSubmit =  (values: z.infer<typeof formSchema>) => {
-        console.log(values);
+    const onSubmit = async (values: z.infer<typeof formSchema>) => {
+        const companion = await createCompanion(values)
+        if(companion){
+            redirect(`/companions/${companion.id}`)
+        }else{
+            console.log('Failed to create a companion');
+            redirect('/')
+        }
     }
 
 
@@ -195,10 +203,24 @@ const CompanionForm = () =>{
                     </FormItem>
                 )}
             />
-            
-
-
-            
+            <FormField
+                    control={form.control}
+                    name="duration"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Estimated session duration in minutes</FormLabel>
+                            <FormControl>
+                                <Input
+                                    type="number"
+                                    placeholder="15"
+                                    {...field}
+                                    className="input"
+                                />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
             
             <Button type="submit" className="w-full cursor-pointer">Build Your Companion</Button>
         </form>
